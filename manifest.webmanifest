@@ -3,7 +3,7 @@
   "name": "HTML compass",
   "short_name": "Compass",
   "description": "A working compass for mobile web browsers",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "darkseagreen",
   "icons": [
     {
