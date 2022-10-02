@@ -5,6 +5,7 @@
   "description": "A working compass for mobile web browsers",
   "display": "fullscreen",
   "background_color": "darkseagreen",
+  "theme_color": "darkseagreen",
   "icons": [
     {
       "src": "icons/icon-512.png",
