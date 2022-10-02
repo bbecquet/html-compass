@@ -6,7 +6,10 @@ const PRECACHE_URLS = [
   './', // Alias for index.html
   'index.html',
   'manifest.webmanifest',
+  'icons/icon-192.png',
   'icons/icon-512.png',
+  'icons/maskable-icon-192.png',
+  'icons/maskable-icon-512.png',
   'icons/favicon.png'
 ]
 
