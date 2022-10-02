@@ -4,8 +4,9 @@ const PRECACHE = 'precache-v1'
 const PRECACHE_URLS = [
   'index.html',
   './', // Alias for index.html
-  'manifes.webmanifest',
-  'icons/icon-512.png'
+  'manifest.webmanifest',
+  'icons/icon-512.png',
+  'icons/favicon.png'
 ]
 
 // The install handler takes care of precaching the resources we always need.
