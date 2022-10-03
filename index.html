@@ -297,8 +297,6 @@
   </main>
   <div id="log"></div>
   <script>
-    const supportMsg = 'Currently supported: Blink/WebKit-based browsers on Android (Chrome, Opera, Samsung browser, etc.)'
-
     const logError = (() => {
       const logElt = document.getElementById('log')
       return (msg) => {
@@ -314,13 +312,11 @@
       }
     })()
 
-    const normalize = (deg) => Number(deg) + Math.ceil(-deg / 360) * 360
-
     class Compass {
       constructor(element) {
         this.element = element
         this.arrow = element.querySelector('.compass-arrow')
-        this.heading = 0;
+        this.heading = 0
       }
 
       update(heading) {
@@ -329,10 +325,10 @@
         // Ref: https://stackoverflow.com/a/19872672
         let rot = this.heading
         let aR = this.heading % 360
-        if (aR < 0) { aR += 360; }
-        if (aR < 180 && (heading > (aR + 180))) { rot -= 360; }
-        if (aR >= 180 && (heading <= (aR - 180))) { rot += 360; }
-        rot += (heading - aR);
+        if (aR < 0) { aR += 360 }
+        if (aR < 180 && (heading > (aR + 180))) { rot -= 360 }
+        if (aR >= 180 && (heading <= (aR - 180))) { rot += 360 }
+        rot += (heading - aR)
         this.heading = rot
         this.arrow.style.rotate = this.heading + 'deg'
       }
@@ -343,40 +339,33 @@
       }
     }
 
-    function getMaxSize() {
-      const wrapperElt = document.getElementById('compass-wrapper');
-      return Math.min(wrapperElt.clientWidth, wrapperElt.clientHeight)
-    }
-
     window.onload = () => {
       const compass = new Compass(document.querySelector('.compass'))
-      let lastAngle
+      let heading
 
       window.addEventListener("deviceorientationabsolute", event => {
-        lastAngle = event.alpha || event.webkitCompassHeading
-        if (lastAngle) {
-          updateHeading(lastAngle)
+        heading = event.alpha || event.webkitCompassHeading
+        if (heading) {
+          compass.update(heading)
+          logAngle(heading.toFixed(1))
         }
       });
 
-      function updateHeading(heading) {
-        compass.update(heading)
-        logAngle(heading.toFixed(1))
-      }
-
       setTimeout(() => {
-        if (!lastAngle) {
-          logError('Unable to read absolute device orientation.<br/><br/>' + supportMsg)
+        if (!heading) {
+          logError('Unable to read absolute device orientation.<br/><br/>Currently supported: Blink/WebKit-based browsers on Android (Chrome, Opera, Samsung browser, etc.)')
         }
       }, 3000)
 
       window.addEventListener('resize', () => {
-        compass.rescale(getMaxSize())
+        const wrapperElt = document.getElementById('compass-wrapper')
+        const maxSize = Math.min(wrapperElt.clientWidth, wrapperElt.clientHeight)
+        compass.rescale(maxSize)
       })
-      compass.rescale(getMaxSize())
+      window.dispatchEvent(new Event('resize'))
 
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.register('sw.js')
       }
     }
   </script>
