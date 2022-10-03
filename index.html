@@ -78,7 +78,7 @@
       background-image:
         radial-gradient(circle at center, transparent 20%, var(--bgOrnamentColor) 20%, var(--bgOrnamentColor) 20.5%, transparent 20.5%),
         radial-gradient(circle at center, transparent 50%, var(--bgOrnamentColor) 50%, var(--bgOrnamentColor) 51%, transparent 51%),
-        radial-gradient(circle at center, white 50%, transparent 52%, transparent 60%, white 60%),
+        radial-gradient(circle at center, white 50%, transparent 52%, transparent 55%, white 55%),
         linear-gradient(45deg, transparent 50%, var(--bgOrnamentColor) 50%, var(--bgOrnamentColor) 50.5%, transparent 50.5%),
         linear-gradient(-45deg, transparent 50%, var(--bgOrnamentColor) 50%, var(--bgOrnamentColor) 50.5%, transparent 50.5%),
         linear-gradient(67.5deg, transparent 50%, var(--bgOrnamentColor) 50%, var(--bgOrnamentColor) 50.5%, transparent 50.5%),
@@ -92,6 +92,7 @@
     }
 
     .compass-direction {
+      rotate: var(--dirAngle);
       position: absolute;
       width: calc(var(--dirMargin) * 2);
       height: calc(var(--dirMargin) * 2);
@@ -103,38 +104,30 @@
       background-clip: text;
       background-color: black;
       color: transparent;
+      height: 100%;
+      padding-top: calc(var(--dirMargin) / 2);
+    }
+
+    .compass-direction.small {
+      color: var(--bgOrnamentColor);
+      background-color: transparent;
+      font-size: medium;
+      padding-top: calc(var(--dirMargin) * 0.8);
     }
 
     .N {
-      top: calc(var(--dirMargin) / 2);
-      left: calc(50% - var(--dirMargin));
       font-weight: bold;
     }
 
     .N:after {
       position: absolute;
-      top: -3px;
+      top: 4px;
       left: calc(50% - 5px);
       display: block;
       content: '';
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-bottom: 5px solid red;
-    }
-
-    .E {
-      right: calc(var(--dirMargin) / 2);
-      top: calc(50% - var(--dirMargin));
-    }
-
-    .S {
-      bottom: calc(var(--dirMargin) / 2);
-      left: calc(50% - var(--dirMargin));
-    }
-
-    .W {
-      left: calc(var(--dirMargin) / 2);
-      top: calc(50% - var(--dirMargin));
     }
 
     .compass-rose {
@@ -163,13 +156,15 @@
     .compass-arrow>span {
       position: absolute;
       display: block;
-      width: 8px;
-      height: 8px;
-      top: -4px;
-      left: -4px;
+      width: calc(var(--arrowDemiWidth) * 2);
+      height: calc(var(--arrowDemiWidth) * 2);
+      top: calc(var(--arrowDemiWidth) * -1);
+      left: calc(var(--arrowDemiWidth) * -1);
       background-color: #c3720e;
       border-radius: 50%;
       z-index: 1;
+      border: 3px solid #ff9f28;
+      box-shadow: 0 0 4px, 0 0 2px inset;
     }
 
     .compass-arrow::before,
@@ -209,7 +204,7 @@
       content: '';
       position: absolute;
       top: 16%;
-      right: 22%;
+      right: 23%;
       width: 12%;
       height: 18%;
       background-color: rgba(255, 255, 255, 0.65);
@@ -260,9 +255,15 @@
       <div class="compass">
         <div class="compass-background">
           <div class="compass-direction N">N</div>
-          <div class="compass-direction E">E</div>
-          <div class="compass-direction S">S</div>
-          <div class="compass-direction W">W</div>
+          <div class="compass-direction" style="--dirAngle:90deg">E</div>
+          <div class="compass-direction" style="--dirAngle:180deg">S</div>
+          <div class="compass-direction" style="--dirAngle:270deg">W</div>
+
+          <div class="compass-direction small" style="--dirAngle:45deg">NE</div>
+          <div class="compass-direction small" style="--dirAngle:135deg">SE</div>
+          <div class="compass-direction small" style="--dirAngle:225deg">SW</div>
+          <div class="compass-direction small" style="--dirAngle:315deg">NW</div>
+
           <div class="compass-rose">
             <div style="--rbLengthFactor:1.5">
               <div class="compass-rose-branch" style="--rbAngle:0"></div>
