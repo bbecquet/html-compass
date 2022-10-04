@@ -343,19 +343,34 @@
       const compass = new Compass(document.querySelector('.compass'))
       let heading
 
-      window.addEventListener("deviceorientationabsolute", event => {
-        heading = event.alpha || event.webkitCompassHeading
+      function onDeviceOrientation(event) {
+        if (event.absolute) {
+          heading = event.alpha
+        } else {
+          heading = event.webkitCompassHeading
+        }
         if (heading) {
           compass.update(heading)
           logAngle(heading.toFixed(1))
         }
-      });
+      }
+
+      window.addEventListener("deviceorientationabsolute", onDeviceOrientation)
+
+      setTimeout(() => {
+        if (!heading) {
+          window.removeEventListener("deviceorientationabsolute", onDeviceOrientation)
+          // try to obtain non-standard webkitCompassHeading on deviceorientation for webkit browsers
+          window.addEventListener("deviceorientation", onDeviceOrientation)
+        }
+      }, 3000)
 
       setTimeout(() => {
         if (!heading) {
           logError('Unable to read absolute device orientation.<br/><br/>Currently supported: Blink-based browsers on Android (Chrome, Opera, Samsung browser, etc.)')
+          window.removeEventListener("deviceorientation", onDeviceOrientation)
         }
-      }, 3000)
+      }, 5000)
 
       window.addEventListener('resize', () => {
         const wrapperElt = document.getElementById('compass-wrapper')
